@@ -144,6 +144,21 @@
                     <label for="name">Contact No 2:</label>
                     <input type="text" class="form-control" id="m_contact_no2" value="<?= $contact_no2; ?>" name="m_contact_no2" placeholder="Contact No" <?php if(!$edit) echo 'disabled'; ?>>
                 </div>
+                <div class="col-sm-3 form-group">
+                    <label for="Whatsapp">Whatsapp No 1:</label><br>
+                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no1; ?>&amp;text=Hi, I am <?= $this->session->userdata('user_name'); ?> are you enquiring for a property?" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
+                </div>
+                <?php
+                if($contact_no2!='')
+                {
+                    ?>
+                    <div class="col-sm-3 form-group">
+                    <label for="Whatsapp">Whatsapp No 2:</label>
+                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no2; ?>&amp;text=Hi, I am <?= $this->session->userdata('user_name'); ?> are you enquiring for a property?" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
+                </div>
+                <?php
+                }
+                ?>
                 <div class="col-md-3 form-group">
                     <label for="assign">Call back type:</label>
                     <select  class="form-control"  id="m_callback_type" name="m_callback_type" required="required" disabled>
