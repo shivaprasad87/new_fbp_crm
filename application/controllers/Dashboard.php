@@ -633,7 +633,7 @@ class Dashboard extends CI_Controller {
             }
         }
 
-        //$data['name'] = "Call back details";
+        $data['c_kyc'] = $this->common_model->getWhere(array('callback_id'=>$id),'customer_kyc');
         $data['heading'] = "Call back details";        
         $this->load->view('callback_details.php',$data);
     }

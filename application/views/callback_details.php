@@ -666,6 +666,68 @@ Team Fullbasket Property Services Pvt Ltd
                         <textarea class="form-control" name="notes" rows="5" id="current_callback1" name="current_callback1" onkeyup="curr(this.value)" placeholder="Please Update Your Changes To Save"></textarea>
                     </div>
                     <div class="clearfix"></div>
+                    <div id="clientKYC" class="col-md-12 form-group">
+                            <input type="hidden" id="callback_id_kyc" name="callback_id_kyc" value="<?= $id ?>">
+                            <br>
+                            <div class="col-md-12 form-group">
+                                <h1 class="text-center" >Customer KYC</h1>
+                            <div class="alert alert-danger">
+                              <strong>Note:</strong> You can Update KYC Only Once
+                            </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="Employment">Employment:</label>
+                                <input type="text" class="form-control" id="Employment" name="Employment" placeholder="Employment " value="<?=isset($c_kyc[0]->Employment)?$c_kyc[0]->Employment:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="Designation">Designation:</label>
+                                <input type="text" class="form-control" id="Designation" name="Designation" placeholder="Designation" value="<?=isset($c_kyc[0]->Designation)?$c_kyc[0]->Designation:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="Salary">Salary (P.A):</label>
+                                <input type="text" class="form-control" id="Salary" name="Salary" placeholder="Salary" value="<?=isset($c_kyc[0]->Salary)?$c_kyc[0]->Salary:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="dob">Birth Date:</label>
+                                <input type="text" class="form-control datepicker" id="dob" name="dob" placeholder="dob" value="<?=isset($c_kyc[0]->dob)?$c_kyc[0]->dob:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="Anniversary">Anniversary Date:</label>
+                                <input type="text" class="form-control datepicker" id="Anniversary" name="Anniversary" placeholder="Anniversary" value="<?=isset($c_kyc[0]->Anniversary)?$c_kyc[0]->Anniversary:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="SpouseName">Spouse Name:</label>
+                                <input type="text" class="form-control" id="SpouseName" name="SpouseName" placeholder="Spouse Name" value="<?=isset($c_kyc[0]->SpouseName)?$c_kyc[0]->SpouseName:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="Spouseemployment">Spouse employment:</label>
+                                <input type="text" class="form-control" id="Spouseemployment" name="Spouseemployment" placeholder="Spouse employment" value="<?=isset($c_kyc[0]->Spouseemployment)?$c_kyc[0]->Spouseemployment:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="SpouseDesignation">Spouse Designation:</label>
+                                <input type="text" class="form-control" id="SpouseDesignation" name="SpouseDesignation" placeholder="Spouse Designation" value="<?=isset($c_kyc[0]->SpouseDesignation)?$c_kyc[0]->SpouseDesignation:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="SposeSalary">Spose Salary (P.A):</label>
+                                <input type="text" class="form-control" id="SposeSalary" name="SposeSalary" placeholder="Spose Salary" value="<?=isset($c_kyc[0]->SposeSalary)?$c_kyc[0]->SposeSalary:'';?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="SpouseBirthDate">Spouse Birth Date:</label>
+                                <input type="text" class="form-control datepicker" id="SpouseBirthDate" name="SpouseBirthDate" placeholder="Spouse Birth Date" value="<?=isset($c_kyc[0]->SpouseBirthDate)?$c_kyc[0]->SpouseBirthDate:'';?>">
+                            </div> 
+                            <div class="col-sm-12 form-group">
+                                <div class="alert alert-success" id="kyc_success" style="display:none">
+                                    <strong>Success!</strong> Customer KYC Updated .
+                                </div>
+                                <div class="alert alert-danger" id="kyc_error" style="display:none">
+                                    <strong>Failed!</strong> Customer KYC Updated Before.
+                                </div>
+
+                                
+                                <input type="hidden" name="" id="user_id" value="<?=$this->session->userdata('user_id');?>">
+                                <button type="button" onclick="customer_kyc()" class="btn btn-success">Send</button>
+                            </div>
+                        </div>
                     <div class="col-md-6 form-group">
                         <input type="checkbox" name="fancy-checkbox-success" onclick="reassignDate()"  id="fancy-checkbox-success" autocomplete="off" />
                         <div class="btn-group">
@@ -856,7 +918,7 @@ Team Fullbasket Property
                     </div>
                 <?php } ?>
             </div>
-             <div class="col-md-6 form-group">
+             <!-- <div class="col-md-6 form-group">
                         <input type="checkbox" name="fancy-checkbox-info-kyc" onclick="clientKYC()"  id="fancy-checkbox-info-kyc" autocomplete="off" />
                         <div class="btn-group">
                             <label for="fancy-checkbox-info-kyc" class="btn btn-info">
@@ -868,69 +930,9 @@ Team Fullbasket Property
                             </label>
                         </div>
                        
-                    </div>
+                    </div> -->
 
-                    <div id="clientKYC" hidden class="col-md-12 form-group">
-                            <input type="hidden" id="callback_id_kyc" name="callback_id_kyc" value="<?= $id ?>">
-                            <br>
-                            <div class="col-md-12 form-group">
-                            <div class="alert alert-danger">
-                              <strong>Note:</strong> You can Update KYC Only Once
-                            </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="Employment">Employment:</label>
-                                <input type="text" class="form-control" id="Employment" name="Employment" placeholder="Employment ">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="Designation">Designation:</label>
-                                <input type="text" class="form-control" id="Designation" name="Designation" placeholder="Designation">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="Salary">Salary (P.A):</label>
-                                <input type="text" class="form-control" id="Salary" name="Salary" placeholder="Salary">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="dob">Birth Date:</label>
-                                <input type="text" class="form-control datepicker" id="dob" name="dob" placeholder="dob">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="Anniversary">Anniversary Date:</label>
-                                <input type="text" class="form-control datepicker" id="Anniversary" name="Anniversary" placeholder="Anniversary">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="SpouseName">Spouse Name:</label>
-                                <input type="text" class="form-control" id="SpouseName" name="SpouseName" placeholder="Spouse Name">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="Spouseemployment">Spouse employment:</label>
-                                <input type="text" class="form-control" id="Spouseemployment" name="Spouseemployment" placeholder="Spouse employment">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="SpouseDesignation">Spouse Designation:</label>
-                                <input type="text" class="form-control" id="SpouseDesignation" name="SpouseDesignation" placeholder="Spouse Designation">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="SposeSalary">Spose Salary (P.A):</label>
-                                <input type="text" class="form-control" id="SposeSalary" name="SposeSalary" placeholder="Spose Salary">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="SpouseBirthDate">Spouse Birth Date:</label>
-                                <input type="text" class="form-control datepicker" id="SpouseBirthDate" name="SpouseBirthDate" placeholder="Spouse Birth Date">
-                            </div> 
-                            <div class="col-sm-12 form-group">
-                                <div class="alert alert-success" id="kyc_success" style="display:none">
-                                    <strong>Success!</strong> Customer KYC Updated .
-                                </div>
-                                <div class="alert alert-danger" id="kyc_error" style="display:none">
-                                    <strong>Failed!</strong> Customer KYC Updated Before.
-                                </div>
-
-                                
-                                <input type="hidden" name="" id="user_id" value="<?=$this->session->userdata('user_id');?>">
-                                <button type="button" onclick="customer_kyc()" class="btn btn-success">Send</button>
-                            </div>
-                        </div>
+                    
             </div>
             <div class="clearfix"></div>
             <br> 
