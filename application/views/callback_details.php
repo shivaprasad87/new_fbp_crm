@@ -142,7 +142,7 @@
                 </div>
                 <div class="col-sm-3 form-group">
                     <label for="Whatsapp">Whatsapp No 1:</label><br>
-                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no1; ?>&amp;text=Hi, I am <?= $this->session->userdata('user_name'); ?> are you enquiring for a property?" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
+                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no1; ?>&amp;text=Hi “Mr/Miss <?= $name; ?>”, We have received your Property Query! I would like to connect with you at your convenient time for project details" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-3 form-group">
@@ -156,7 +156,7 @@
                     ?>
                     <div class="col-sm-3 form-group">
                     <label for="Whatsapp">Whatsapp No 2:</label>
-                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no2; ?>&amp;text=Hi, I am <?= $this->session->userdata('user_name'); ?> are you enquiring for a property?" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
+                    <a href="https://api.whatsapp.com/send?phone=91<?= $contact_no2; ?>&amp;text=Hi “Mr/Miss <?= $name; ?>”, We have received your Property Query! I would like to connect with you at your convenient time for project details" target="_blank"><img src="<?=base_url('assets/img');?>/whatsapp.png"> </a>
                 </div>
                 <?php
                 }
