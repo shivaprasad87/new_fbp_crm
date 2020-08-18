@@ -802,18 +802,21 @@ $list_id=implode(',', $ids);
         }
         
         $this->db->where("ced.date BETWEEN '".$fromDate."' AND '".$toDate."' AND ced.type =".$type);
-        $this->db->group_by('ced.callback_id, ced.date');
+        //$this->db->group_by('ced.callback_id, ced.date,cb.id');
         $query = $this->db->get();
 
-        return $query  ?$query->result() : false;
+        return $query?$query->result() : false;
     }
 
-    function sitevisit_data_details($clause){
+    function sitevisit_data_details($clause,$type=''){
         $this->db->select('cb.id, cb.name, cb.contact_no1 contactNo, ced.date visitDate, p.name projectName, ld.name leadSourceName');
         $this->db->from('callback_extra_data ced');
         $this->db->join('callback as cb','ced.callback_id=cb.id');
         $this->db->join('user as u','u.id=cb.user_id');
-        $this->db->join('project as p','p.id=ced.project_id');
+        if($type=='site-visit-not-done')
+        $this->db->join('project as p','p.id=ced.project_id','left');
+        else
+            $this->db->join('project as p','p.id=ced.project_id');
         $this->db->join('lead_source as ld','ld.id=cb.lead_source_id');
         $this->db->where($clause);
         $query = $this->db->get();       

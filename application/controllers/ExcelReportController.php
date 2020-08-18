@@ -55,12 +55,23 @@ class ExcelReportController extends CI_Controller
 			'ced.date <='		=> $this->input->get('endDate')
 			];
 			break;
+			case 'site-visit-not-done':
+						$data['heading']  = "Site Visit Not Done Report for ".$advisorData['first_name']." ".$advisorData['last_name'];
+						$data['duration'] = "<strong>From</strong> <em>".$this->input->get('fromDate')."</em> <strong>To</strong> <em>".$this->input->get('endDate')."</em>";
+						$clause = [
+							'u.id'				=> $this->input->get('userid'),
+							//'ced.callback_id'	=> $this->input->get('cbId'),
+							'ced.type' 			=> 4,
+							'ced.date >='		=> $this->input->get('fromDate'),
+							'ced.date <='		=> $this->input->get('endDate')
+						];
+					break;
 			default:
 
 				}
 				
 				
-				$data['fetchData'] = $this->callback_model->sitevisit_data_details($clause);
+				$data['fetchData'] = $this->callback_model->sitevisit_data_details($clause,$this->input->get('reportType'));
 				$prArry = array();  
 				$page = $this->uri->segment(2);
 				$startpage =$page;

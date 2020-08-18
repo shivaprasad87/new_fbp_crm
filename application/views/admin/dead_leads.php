@@ -4,6 +4,7 @@
         $this->load->view('inc/admin_header');
     else
         $this->load->view('inc/header');    
+ 
 ?>
 <body>
 	 <div class="se-pre-con"></div>
@@ -310,6 +311,17 @@
                     } ?>
                 </select>
             </div>
+             <div class="col-sm-3 form-group" style="display:<?= ($this->session->userdata("status") == 4) ? 'block' : 'none' ?>;">
+                    <label for="dead_city">Dead City:</label> 
+                    <select  class="form-control"  id="dead_city" name="dead_city">
+                                <option value="">Select</option>   
+                                <?php $selectCity = $this->common_model->getWhere(array('active'=>1),'city');
+                                foreach($selectCity as $city){ ?>
+                                    <option value="<?php echo $city->id; ?>" <?php if($this->session->userdata("dead_city")==$city->id){ echo "selected";}?>><?php echo $city->name ?></option>
+                                <?php } ?> 
+                                            
+                    </select>
+                </div>
             <div class="col-sm-3 form-group">
                     <label for="budget">Budget:</label>
                     <!-- <input type="text" class="form-control" id="budget" name="budget" placeholder="budget in lacs or crores*" value="" required=""> -->
@@ -381,6 +393,7 @@
                                             
                     </select>
                 </div>
+               
                 <div class="clearfix"></div>
 
         </div>
@@ -1122,6 +1135,7 @@
         $('#tos').val("");
         $('#client_type').val("");
         $('#Location').val("");
+        $('#dead_city').val("");
        
         $("#search_form").submit();
     }

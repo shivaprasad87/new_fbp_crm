@@ -563,6 +563,8 @@ $customer_req = array(
 		$update_data = array(
 			'last_update' => date('Y-m-d H:s:i')
 		);
+		if($this->input->post('dead_city'))
+			$update_data['dead_city'] = $this->input->post('dead_city');
 		if($this->input->post('dept_id'))
 			$update_data['dept_id'] = $this->input->post('dept_id');
 		if($this->input->post('name'))
@@ -884,9 +886,14 @@ $customer_req = array(
 			$a_services=$this->input->post('a_services');
 			$tos=$this->input->post('tos');
 			$client_type=$this->input->post('client_type'); 
-			$dead_reason=$this->input->post('dead_reason'); 
+			$dead_reason=$this->input->post('dead_reason');
+			$dead_city=$this->input->post('dead_city'); 
 
-			
+			if($dead_city!==null){
+				$this->session->set_userdata("dead_city",$dead_city);
+				if($dead_city)
+					$where.=" AND cb.dead_city=".trim($dead_city);
+			}
 			if($budget!==null){
 				$this->session->set_userdata("budget",$budget);
 				if($budget)
@@ -984,7 +991,9 @@ $customer_req = array(
 					
 		}
 		else{
-				 
+			
+			if($this->session->userdata("dead_city"))
+				$where.=" AND cb.dead_city=".trim($this->session->userdata("dead_city"));	 
 			if($this->session->userdata("department"))
 				$where.=" AND cb.dept_id=".trim($this->session->userdata("department"));
 			if($this->session->userdata("project"))
@@ -1031,7 +1040,7 @@ $customer_req = array(
         $offset = !$page ? 0 : $page;
 		//------ End --------------
 		$data['result'] = $this->callback_model->search_callback(null,$where,$offset,VIEW_PER_PAGE);
-
+		//echo $this->db->last_query();die;
 		$this->load->view('admin/dead_leads',$data);
 	}
 
@@ -1353,7 +1362,6 @@ $customer_req = array(
 
 				case 'site_visit':
 					$this->session->set_userdata("report-heading","Site Visit Done Report");
-					//$advisors = array();
 					$idsArry = array();
 					$site_visits = $this->callback_model->generate_sitevisit_data($dept,$city,$fromDate,$toDate,$type=2);
 					foreach ($site_visits as $key => $value) {
@@ -1430,15 +1438,32 @@ $customer_req = array(
 
 				case 'site_visit_fixed':
 					$this->session->set_userdata("report-heading","Site Visit Fixed Report");
+
 					$idsArry = array();
-					$site_visits = $this->callback_model->generate_sitevisit_data($dept,$city,$fromDate,$toDate,$type=1);				
+					$site_visits = $this->callback_model->generate_sitevisit_data($dept,$city,$fromDate,$toDate,$type=1);
 					foreach ($site_visits as $key => $value) {
 						if(!in_array_r($value->id, $idsArry))
 							$idsArry[$value->emp_code][]	= $value->id;
 					}
+					$return['siteVisitCount'] = $idsArry; 
 
-					$return['siteVisitCount'] = $idsArry;
-					
+					$idsArry1 = array();
+					$site_visits1 = $this->callback_model->generate_sitevisit_data($dept,$city,$fromDate,$toDate,$type=2);
+					foreach ($site_visits1 as $key => $value) {
+						if(!in_array_r($value->id, $idsArry1))
+							$idsArry1[$value->emp_code][]	= $value->id;
+					}
+					$return['siteVisitDoneCount'] = $idsArry1;
+
+					$idsArry2 = array();
+					$site_visits2 = $this->callback_model->generate_sitevisit_data($dept,$city,$fromDate,$toDate,$type=4);
+					foreach ($site_visits2 as $key => $value) {
+						if(!in_array_r($value->id, $idsArry1))
+							$idsArry2[$value->emp_code][]	= $value->id;
+					}
+					$return['siteVisitNotDoneCount'] = $idsArry2;
+
+
 					$return['site_visits'] = $site_visits;
 					$return['view_page'] = 'reports/site_visit_fixed_report';
 					$return['mail_template'] = 'mail/site_visit_fixed_report';
@@ -1556,11 +1581,23 @@ $customer_req = array(
 							'ced.date <='		=> $this->input->get('endDate')
 						];
 					break;
+					case 'site-visit-not-done':
+						$data['heading']  = "Site Visit Not Done Report for ".$advisorData['first_name']." ".$advisorData['last_name'];
+						$data['duration'] = "<strong>From</strong> <em>".$this->input->get('fromDate')."</em> <strong>To</strong> <em>".$this->input->get('endDate')."</em>";
+						$clause = [
+							'u.id'				=> $this->input->get('userid'),
+							//'ced.callback_id'	=> $this->input->get('cbId'),
+							'ced.type' 			=> 4,
+							'ced.date >='		=> $this->input->get('fromDate'),
+							'ced.date <='		=> $this->input->get('endDate')
+						];
+					break;
 				default:
 
 			}
 			
-			$data['fetchData'] = $this->callback_model->sitevisit_data_details($clause);
+			$data['fetchData'] = $this->callback_model->sitevisit_data_details($clause,$this->input->get('reportType'));
+			//echo $this->db->last_query();die;
 			$prArry = array();            
             foreach ($data['fetchData'] as $key => $value) {
             	$prArry[$value['id']][$key] = $value['id'];

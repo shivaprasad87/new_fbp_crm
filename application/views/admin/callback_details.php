@@ -341,7 +341,7 @@ Team Fullbasket Property Services Pvt Ltd
                         </div>
                     </div>
                     <div id="dead" hidden>
-                        <div class="col-sm-3 form-group">
+                        <div class="col-sm-4 form-group">
                             <label for="comment">Reason of dead:</label>
                             <select  class="form-control"  id="selectDeadRsn" name="selectDeadRsn" onchange="curr(this.value)">
                                 <option value="">--Select--</option>
@@ -351,18 +351,6 @@ Team Fullbasket Property Services Pvt Ltd
                                 <?php } ?> 
                             </select>
                         </div>
-                        <div id="selectdeadcity" hidden>
-                        <div class="col-sm-3 form-group">
-                            <label for="comment">City:</label>
-                            <select  class="form-control"  id="selectCity" name="selectCity">
-                                <option value="">--Select--</option>
-                                <?php $selectCity = $this->common_model->getWhere(array('active'=>1),'city');
-                                foreach($selectCity as $city){ ?>
-                                    <option value="<?php echo $city->id; ?>"><?php echo $city->name ?></option>
-                                <?php } ?> 
-                            </select>
-                        </div>
-                    </div>
                         <div class="col-sm-12 form-group">
                             <label for="comment">Reason of dead:</label>
                             <textarea class="form-control reasonOfDead" name="notes" id="notes" rows="3" ></textarea>
@@ -1191,20 +1179,10 @@ $(document).ready(function() {
         });
             
     })
-    
+
+
     function curr(v){       
         //if(v.length){
-            if(v=="Other Cities")
-            {
-                $("#selectCity").prop('required',true);
-                $('#selectdeadcity').show();
-            }
-            else
-            {
-                $("#selectCity").prop('required',false);
-                $('#selectdeadcity').hide(); 
-            }
-
         var stsId = $('#m_status').val();
         var error = 1;
         if(stsId == 4) {
@@ -1399,7 +1377,6 @@ $(document).ready(function() {
             'project_type':$('#c_projectType').val(),
 
             'reason_for_dead':$('.reasonOfDead').val(),
-            'dead_city':$('#selectCity').val(),
             'reason_cause':$('#selectDeadRsn').val(),
             
             'current_callback':$('#current_callback1').val(),
@@ -1452,8 +1429,6 @@ $(document).ready(function() {
         }
         if($("#hidden_user_id").val() == $("#m_user_name").val())
             data.current_user_id = $("#m_user_name").val();
-
-        console.log(data);
         
         $.ajax({
             type:"POST",
@@ -1472,20 +1447,18 @@ $(document).ready(function() {
             $('#close').hide();
             $('#dead').hide();
             $('#abc').show();
-            
         } else if('5'==v){
             $('#abc').hide();
             $('#dead').hide();
-            $('#close').show(); 
+            $('#close').show();
         } else if('4'==v){
             $('#abc').hide();
             $('#close').hide();
-            $('#dead').show(); 
-
+            $('#dead').show();
         } else{
             $('#close').hide();
             $('#abc').hide();
-            $('#dead').hide(); 
+            $('#dead').hide();
         }
     }
 

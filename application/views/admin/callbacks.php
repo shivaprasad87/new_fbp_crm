@@ -318,9 +318,12 @@
                                     <table>
                                         <tr id="background">
                                             <td>
-                                                <a onclick="edit('<?php echo $data->id; ?>')" data-toggle="modal" data-target="#modal_edit">
+                                               <!--  <a onclick="edit('<?php echo $data->id; ?>')" data-toggle="modal" data-target="#modal_edit">
                                                     <i class="fa fa-home fa-2x"  title="Detail" style="color:#ff1122; font-size:21px;padding-right:7px;" aria-hidden="true"></i>
-                                                </a>
+                                                </a> -->
+                                                <a href="<?= base_url('callback-details?id='.$data->id) ?>" target="_blank">
+                                           <i class="fa fa-home fa-2x"  title="Detail" style="color:#ff1122; font-size:21px;padding-right:7px;" aria-hidden="true"></i>
+                                        </a>
                                             </td>
                                             <td>
                                                 <a onclick="abc('<?php echo $data->id; ?>')" data-toggle="modal" data-target="#modal_notes">
@@ -378,7 +381,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_edit"  role="dialog">
+<!-- <div class="modal fade" id="modal_edit"  role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -721,7 +724,7 @@
                 <div class="clearfix"></div>
                  <div class="col-sm-3 form-group">
                     <label for="budget">Budget:</label>
-                    <!-- <input type="text" class="form-control" id="budget" name="budget" placeholder="budget in lacs or crores*" value="" required=""> -->
+                     
                     <select  class="form-control"  id="m_budget" name="budget"  >
                                 <option value="">Select</option>  
                                 <option value="1" >50 Lakhs</option>
@@ -745,7 +748,7 @@
                  
                 <div class="col-sm-3 form-group">
                     <label for="p_type">Purchase Type:</label>
-                    <!-- <input type="text" class="form-control" id="p_type" name="p_type" placeholder="Purchase Type*" value="" required=""> -->
+                    
                     <select  class="form-control"  id="m_p_type" name="p_type" >
                                 <option value="">Select</option>  
                                 <option value="1">Apartment</option>
@@ -758,7 +761,7 @@
                 </div>
                 <div class="col-sm-3 form-group">
                     <label for="possesion">Possesion:</label>
-                   <!--  <input type="text" class="form-control" id="possesion" name="possesion" placeholder="Possesion*" value="" required=""> -->
+                 
                     <select  class="form-control"  id="m_possesion" name="possesion" >
                                 <option value="">Select</option>  
                                 <option value="1">RTM</option>
@@ -769,7 +772,7 @@
                 </div>
                 <div class="col-sm-3 form-group">
                     <label for="a_services">Additional Services:</label>
-                    <!-- <input type="text" class="form-control" id="a_services" name="a_services" placeholder="Additional Sevices*" value="" required=""> -->
+                    
                      <select  class="form-control"  id="m_a_services" name="a_services" >
                                 <option value="">Select</option>  
                                 <option value="1">Site Visit Assitance</option>
@@ -782,7 +785,7 @@
                 </div>
                 <div class="col-sm-3 form-group">
                     <label for="tos">Type Of Sale:</label>
-                    <!-- <input type="text" class="form-control" id="tos" name="tos" placeholder="Type Of Sale*" value="" required=""> -->
+                    
                      <select  class="form-control"  id="m_tos" name="tos" >
                                 <option value="">Select</option>  
                                 <option value="1">Primary</option>
@@ -881,7 +884,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <script type="text/javascript">
 

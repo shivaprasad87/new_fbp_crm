@@ -175,7 +175,7 @@
              var fromDate=$($(trid)[4]).text().trim();
              var toDate=$($(trid)[5]).text().trim();
              $("#customer_detail").empty();
-             var weburl=   'http://'+window.location.host+'/admin/lead_report?user_id='+userid+'&fromDate='+fromDate+'&toDate='+toDate
+             var weburl=   'https://'+window.location.host+'/admin/lead_report?user_id='+userid+'&fromDate='+fromDate+'&toDate='+toDate
              console.log(weburl);
              var tbody='';
              var theadtr='';
@@ -232,7 +232,7 @@
                     //  theadtr+='<tr><th colspan=2>'+data[0].user_name+'</th></tr><tr><th>Count</th><th>Project Name</th></tr>';
                     //   $("#product-theadtr").append(theadtr);
                     for(i=0;i<=data.length-1;i++){
-                    	var url_of_project = 'http://'+window.location.host+'/admin/lead_report?user_id='+user_id+'&fromDate='+fromDate+'&toDate='+toDate+'&lead_source_id='+lead_source_id+'&project_id='+data[i].project_id;
+                    	var url_of_project = 'https://'+window.location.host+'/admin/lead_report?user_id='+user_id+'&fromDate='+fromDate+'&toDate='+toDate+'&lead_source_id='+lead_source_id+'&project_id='+data[i].project_id;
                     tbody +='<tr><td style="display:none;">'+data[i].project_id+'</td><td style="display:none;">'+data[i].user_id+'</td><td>'+data[i].project+'</td><td class="target"><a href="'+url_of_project+'"  target="_blank" style="cursor: pointer;">'+data[i].count+'</a></td><td style="display:none;">'+lead_source_id+'</td><td style="display:none;">'+fromDate+'</td><td style="display:none;">'+toDate+'</td></tr>'
                 }
                 $("#product_detail").append(tbody)

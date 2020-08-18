@@ -116,6 +116,8 @@
 						<th>Employee Id</th>
 						<th>Advisor</th>
 						<th>No Of site Visit fixed</th>
+						<th>No Of site Visit Done</th>
+						<th>No Of site Visit Dead</th>
 						<th>Site Visit Date</th>
 					</tr>
 				</thead>
@@ -130,6 +132,17 @@
 							 		<td><?php echo $value->emp_code; ?></td>
 							 		<td><?php echo $value->fullname; ?></td>
 							 		<td><a href="<?= base_url('admin/view-site-visit-data?userid='.$value->userId.'&fromDate='.$startDate.'&endDate='.$endDate.'&reportType=site-visit-fixed') ?>" target="_blank"><?php echo count($siteVisitCount[$value->emp_code]); ?></a></td>
+							 		<td><a href="<?= base_url('admin/view-site-visit-data?userid='.$value->userId.'&fromDate='.$startDate.'&endDate='.$endDate.'&reportType=site-visit-done') ?>" target="_blank"><?php if(array_key_exists($value->emp_code,$siteVisitDoneCount))
+							 			echo count($siteVisitDoneCount[$value->emp_code]);
+							 			else
+							 				echo '0'; ?></a></td> 
+							 			<td><a href="<?= base_url('admin/view-site-visit-data?userid='.$value->userId.'&fromDate='.$startDate.'&endDate='.$endDate.'&reportType=site-visit-not-done') ?>" target="_blank"><?php if(array_key_exists($value->emp_code,$siteVisitNotDoneCount))
+							 			echo count($siteVisitNotDoneCount[$value->emp_code]);
+							 			else
+							 				echo '0'; ?></a></td>
+
+
+							 			
 							 		<td><?php echo $value->date; ?></td>
 							 	</tr>
 								<?php
