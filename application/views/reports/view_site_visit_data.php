@@ -74,7 +74,8 @@
             <th>Contact No</th>
             <th>Date of Site Visit</th>
             <th>Project</th>
-            <th>Lead Source</th> 
+            <th>Lead Source</th>
+            <th>Action</th> 
         </tr>
     </thead> 
     <tbody id="main_body">
@@ -88,10 +89,26 @@
                     <tr id="row<?php echo $k; ?>">
                         <td><?php echo $k; ?></td>
                         <td><?php echo $data['name']; ?></td>
-                        <td><?php echo $data['contactNo'] ?></td>
+                        <td><?php echo $data['contactNo']; ?></td>
                         <td><?php echo $data['visitDate']; ?></td>
                         <td><?php echo implode(', ', $projectsData[$data['id']]); ?></td>
                         <td><?php echo $data['leadSourceName']; ?></td>
+                        <td class="priority-11">
+                            <table>
+                            <tr class="icon" style="background-color: #ffffff00;">
+                                    <td> 
+                                        <a href="<?= base_url('callback-details?id='.$data['id']) ?>" target="_blank">
+                                            <i class="fa fa-home fa-2x"  title="Detail" style="" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a onclick="previous_callbacks('<?php echo $data['id']; ?>')" data-toggle="modal" data-target="#modal_previous">
+                                            <i class="fa fa-keyboard-o fa-2x" title="Notes" style="" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
                     <?php 
                     $k++;
@@ -171,7 +188,7 @@
 <!--<script src="<?php echo base_url()?>assets/js/scripts.js"></script>-->
 
 <!-- Bootstrap Core JavaScript -->
-   
+   <?php $this->load->view('callback_operations'); ?>
    <script>
     $(document).ready(function() {
          $('#example').DataTable({

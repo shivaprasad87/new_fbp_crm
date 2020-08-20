@@ -1039,53 +1039,6 @@ e.preventDefault();
 }
 });
 });*/
-$(document).ready(function() {
-    var a = $("#m_dept").val();
-    if(a==1)
-    {
-        $("#budget").prop('required',true);
-        $("#cities").prop('required',true);
-        $("#Location").prop('required',true);
-        $("#p_type").prop('required',true);
-        $("#possesion").prop('required',true);
-        $("#a_services").prop('required',true);
-        $("#tos").prop('required',true);
-        $("#client_type").prop('required',true);
-            if($("#budget").val()==""){
-                $("#budget").focus();
-                return false;
-            }
-             if($("#cities").val()==""){
-                $("#cities").focus();
-                return false;
-            }
-            if($("#Location").val()==""){
-                $("#Location").focus();
-                return false;
-            }
-             if($("#p_type").val()==""){
-                $("#p_type").focus();
-                return false;
-            }
-             if($("#possesion").val()==""){
-                $("#possesion").focus();
-                return false;
-            }
-             if($("#a_services").val()==""){
-                $("#a_services").focus();
-                return false;
-            }
-             if($("#tos").val()==""){
-                $("#tos").focus();
-                return false;
-            }
-             if($("#client_type").val()==""){
-                $("#client_type").focus();
-                return false;
-            } 
-    }
-    
-});
 
     $(function(){
         $('#site_visit_data .sbmit').on('click', function() {
@@ -1454,6 +1407,50 @@ $(document).ready(function() {
             data.current_user_id = $("#m_user_name").val();
 
         console.log(data);
+        var a = $("#m_dept").val();
+    if(a==1)
+    {
+        $("#budget").prop('required',true);
+        $("#cities").prop('required',true);
+        $("#Location").prop('required',true);
+        $("#p_type").prop('required',true);
+        $("#possesion").prop('required',true);
+        $("#a_services").prop('required',true);
+        $("#tos").prop('required',true);
+        $("#client_type").prop('required',true);
+            if($("#budget").val()==""){
+                $("#budget").focus();
+                return false;
+            }
+             if($("#cities").val()==""){
+                $("#cities").focus();
+                return false;
+            }
+            if($("#Location").val()==""){
+                $("#Location").focus();
+                return false;
+            }
+             if($("#p_type").val()==""){
+                $("#p_type").focus();
+                return false;
+            }
+             if($("#possesion").val()==""){
+                $("#possesion").focus();
+                return false;
+            }
+             if($("#a_services").val()==""){
+                $("#a_services").focus();
+                return false;
+            }
+             if($("#tos").val()==""){
+                $("#tos").focus();
+                return false;
+            }
+             if($("#client_type").val()==""){
+                $("#client_type").focus();
+                return false;
+            } 
+    }
         
         $.ajax({
             type:"POST",
