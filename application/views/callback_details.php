@@ -1408,7 +1408,7 @@ e.preventDefault();
 
         console.log(data);
         var a = $("#m_dept").val();
-    if(a==1)
+    if(a==1 || a==2)
     {
         $("#budget").prop('required',true);
         $("#cities").prop('required',true);
