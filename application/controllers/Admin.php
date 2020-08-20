@@ -3455,6 +3455,109 @@ public function make_user_online($value='')
 			echo json_encode($result);
 		}
 	}
-	 
+	public function property_data($value='')
+	{
+		$data['name'] = "Add Property Data";
+        $data['heading'] = "Add Property Data";
+        if($this->input->post())
+        { 
+        	$builder_id = $this->input->post('builder');
+        	$project_id = $this->input->post('m_project');
+        	$c_name = $this->input->post('c_name');
+        	$c_email = $this->input->post('c_email');
+        	$c_number = $this->input->post('c_number');
+        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number);
+        	$property_id = $this->callback_model->insertRow($p_data,'property_data'); 
+        	$gallery = $this->input->post('images');
 
+			if ($gallery) {
+			    foreach ($gallery as $image) {
+			        $exploded = explode('/', $image);
+			        $this->callback_model->insertRow(array(
+			            'p_d_id' => $property_id,
+			            'file_name' => 'uploads/property_data/' . end($exploded)
+			        ), 'property_data_files');
+			       rename($image, 'uploads/property_data/' . end($exploded));
+			    }
+			}
+			else
+			{
+				echo "Not able to access files";die;
+			}
+			 $this->session->set_flashdata('success', 'Project Has Been Uploaded successfully');
+			 if($this->session->userdata('user_type')=='admin')
+			 {
+			 	redirect('admin/property_data');
+			 }
+			 else
+			 {
+			 	redirect('property_data');
+			 }
+
+        } 
+		$this->load->view('admin/property_data',$data);
+	}
+	     public function upload_files($folder = 'property_data')
+    {
+        if (empty($_FILES['file']['name'])) {
+
+        } else {
+            if ($_FILES['file']['error'] == 0) {
+                $filetype = null;
+                //upload and update the file
+                $config['upload_path'] = './uploads/' . $folder . '/';
+                $config['max_size'] = '102428800';
+                $config['encrypt_name'] = TRUE;
+                $type = $_FILES['file']['type'];
+                switch ($type) {
+                    case 'image/gif':
+                    case 'image/jpg':
+                    case 'image/png':
+                    case 'image/jpeg':
+                    {
+                        $filetype = 0;
+                        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                        break;
+                    }
+                }
+                $config['overwrite'] = false;
+                $config['remove_spaces'] = true;
+                if (!file_exists('./uploads/' . $folder)) {
+                    if (!mkdir('./uploads/' . $folder . '/', 0755, true)) {
+
+                    }
+                }
+                $microtime = microtime(true) * 10000;
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if ($this->upload->do_upload('file', $microtime)) {
+                    echo json_encode(array(
+                        'type' => $filetype,
+                        'path' => 'uploads/' . $folder . '/' . $this->upload->file_name
+                    ));
+                }
+            }
+        }
+        exit;
+    }
+
+    public function delete_files($table_of_image = 'property_images')
+    {
+        $path = $this->input->post('path');
+        echo unlink('./' . $path);
+        $this->properties_model->deleteWhere(array('image' => $path), $table_of_image);
+        
+    }
+
+ function set_upload_options($path, $file_type) {
+        // upload an image options
+        $config = array();
+        $config['upload_path'] = $path; //give the path to upload the image in folder
+        $config['remove_spaces'] = TRUE;
+        $config['encrypt_name'] = TRUE; // for encrypting the name
+        $config['allowed_types'] = $file_type;
+        $config['max_size'] = '78000';
+        $config['overwrite'] = FALSE;
+        return $config;
+    }
 }

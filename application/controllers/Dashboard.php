@@ -1371,4 +1371,70 @@ class Dashboard extends CI_Controller {
            $data  = $this->callback_model->getMobile('callback',$this->input->get_post('contact_no1'));
            echo json_encode($data);
         }
+        public function send_property_data($value='')
+        {
+            $data['name'] = "index";
+            $data['heading'] = "Send Property Data";
+          if($this->input->post())
+          {
+            $builder_id = $this->input->post('builder');
+            $project_id = $this->input->post('m_project');
+            $this->session->set_flashdata('builder_id', $builder_id);
+            $this->session->set_flashdata('project_id', $project_id);
+           // print_r(array("b_id"=>$builder_id,"p_id"=>$project_id));
+            $a = $this->callback_model->getWhere(array("b_id"=>$builder_id,"p_id"=>$project_id),'property_data');
+            if(count($a)<0 || empty($a))
+            {
+             $this->session->set_flashdata('error', 'No Data Found! Please Contact Your Manager OR Admin ');
+                redirect('send_property_data');
+            }
+            else
+            { 
+              $b= $this->callback_model->getWhere(array("p_d_id"=>$a[0]->id),'property_data_files');
+              $data['p_d_id'] = $a[0]->id;
+              $data['result'] = $b;
+            }
+          }
+        
+          $this->load->view('send_property_data',$data);
+        }
+        public function send_project_data_email($value='')
+        {
+            
+             if ($this->input->post('c_mail')) {
+                $b= $this->callback_model->getWhere(array("p_d_id"=>$this->input->post('p_d_id')),'property_data_files');
+                $a= $this->callback_model->getWhere(array("id"=>$this->input->post('p_d_id')),'property_data');
+                $c = $this->callback_model->getWhere(array("id"=>$a[0]->p_id),'project');
+            $message = "Hi,
+<br><br>
+            Greetings From Full Basket Property! Please find the ".$c[0]->name." project details attached below.
+<br><br><br>
+<br>
+<br>
+Regards, <br>
+".$this->session->userdata("user_name").",<br>".$this->session->userdata("user_email").".";
+            $this->load->library('email');
+            $this->email->initialize(email_config());
+            $to_emails = $this->input->post('c_mail');
+            $this->email->from($this->session->userdata("user_email"), $this->session->userdata("user_name"));
+            $this->email->to($to_emails);
+            $this->email->subject('Project Deatails'); 
+            foreach ($b as $b) {
+                    $this->email->attach(base_url().$b->file_name);
+                }
+                $this->email->message($message);
+            $b =$this->email->send();
+            if($b)
+            {
+               $this->session->set_userdata('success', 'Email Has been Sent!');
+                redirect('send_property_data');
+            }
+            else
+                echo "Fail";
+             
+            }
+          if ($this->input->post('whatsapp')) {
+             
+          }
+        }
 }

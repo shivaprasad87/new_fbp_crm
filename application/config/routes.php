@@ -82,7 +82,12 @@ $route['send-message']="ChatController/send_text_message";
 $route['admin/chat']="admin/chat";
 $route['admin/get-chat-history-vendor']="admin/get_chat_history_by_vendor";
 $route['admin/send-message']="admin/send_text_message";
+$route['property_data']="admin/property_data";
+$route['upload_files']="admin/upload_files";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['feedback'] = 'FeedbackController';
 $route['logout'] = 'login/logout';
+$route['send_property_data'] = 'dashboard/send_property_data';
+$route['admin/send_property_data'] = 'dashboard/send_property_data';
+
