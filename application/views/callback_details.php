@@ -538,10 +538,7 @@ Team Fullbasket Property Services Pvt Ltd
                     </div>
                 <?php } ?>
                 <div class="clearfix"></div>
- <?php 
-                    if($this->session->userdata('user_type')!='admin')
-                    {
-                        ?>
+
                <div class="col-sm-12 clint_req" style="background: #b9bdc04f;margin-bottom: 30px; padding-bottom: 10px;" >
                     <h1 class="text-center" >Client Requirement</h1>
                     <div class="col-sm-3 form-group">
@@ -556,7 +553,11 @@ Team Fullbasket Property Services Pvt Ltd
                                     <option value="5" <?php if($budget==5) echo 'selected';?>>1.5-2 cr</option>
                                     <option value="6" <?php if($budget==6) echo 'selected';?>>2 cr+</option>                                            
                         </select>
-                    </div> 
+                    </div>
+                    <!-- <div class="col-sm-3 form-group">
+                        <label for="Locality">Locality:</label>
+                        <input type="text" class="form-control" id="Locality" name="Locality" placeholder="city, area*" value="<?=$Locality?>" required="">
+                    </div> -->
                     <div class="col-sm-3 form-group">
                         <label for="cities">City:</label>
                         <input type="text" class="form-control" id="cities"  name="cities" value="<?=$cities;?>">
@@ -587,7 +588,8 @@ Team Fullbasket Property Services Pvt Ltd
         },
         select: function (event, ui) {
           // Set selection
-          $('#cities').val(ui.item.label); // display the selected text 
+          $('#cities').val(ui.item.label); // display the selected text
+          //$('#userid').val(ui.item.value); // save selected id to input
           return false;
         }
       });
@@ -623,7 +625,8 @@ Team Fullbasket Property Services Pvt Ltd
         },
         select: function (event, ui) {
           // Set selection
-          $('#Location').val(ui.item.label); // display the selected text 
+          $('#Location').val(ui.item.label); // display the selected text
+          //$('#userid').val(ui.item.value); // save selected id to input
           return false;
         }
       });
@@ -687,9 +690,6 @@ Team Fullbasket Property Services Pvt Ltd
                         </select>
                     </div>
                  </div>
-                 <?php
-             }
-             ?>
 
                 <div class="clearfix"></div>
                 <div class="col-sm-6 form-group">
@@ -703,10 +703,6 @@ Team Fullbasket Property Services Pvt Ltd
                         <textarea class="form-control" name="notes" rows="5" id="current_callback1" name="current_callback1" onkeyup="curr(this.value)" placeholder="Please Update Your Changes To Save"></textarea>
                     </div>
                     <div class="clearfix"></div>
-                    <?php 
-                    if($this->session->userdata('user_type')!='admin')
-                    {
-                        ?>
                     <div id="clientKYC" class="col-md-12 form-group">
                             <input type="hidden" id="callback_id_kyc" name="callback_id_kyc" value="<?= $id ?>">
                             <br>
@@ -769,7 +765,6 @@ Team Fullbasket Property Services Pvt Ltd
                                 <button type="button" onclick="customer_kyc()" class="btn btn-success">Send</button>
                             </div>
                         </div>
-                    }
                     <div class="col-md-6 form-group">
                         <input type="checkbox" name="fancy-checkbox-success" onclick="reassignDate()"  id="fancy-checkbox-success" autocomplete="off" />
                         <div class="btn-group">
@@ -1438,10 +1433,6 @@ e.preventDefault();
 
         console.log(data);
         var a = $("#m_dept").val();
-         <?php 
-                    if($this->session->userdata('user_type')!='admin')
-                    {
-                        ?>
     if(a==1)
     {
         $("#budget").prop('required',true);
@@ -1485,9 +1476,6 @@ e.preventDefault();
                 return false;
             } 
     }
-    <?php
-}
-?>
         
         $.ajax({
             type:"POST",
