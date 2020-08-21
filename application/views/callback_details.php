@@ -538,7 +538,9 @@ Team Fullbasket Property Services Pvt Ltd
                     </div>
                 <?php } ?>
                 <div class="clearfix"></div>
-
+                <?php
+                if($this->session->userdata('user_type')!='admin')
+                        {?>
                <div class="col-sm-12 clint_req" style="background: #b9bdc04f;margin-bottom: 30px; padding-bottom: 10px;" >
                     <h1 class="text-center" >Client Requirement</h1>
                     <div class="col-sm-3 form-group">
@@ -692,6 +694,7 @@ Team Fullbasket Property Services Pvt Ltd
                  </div>
 
                 <div class="clearfix"></div>
+            <?php } ?>
                 <div class="col-sm-6 form-group">
                     <label for="comment">Preview Callbacks:</label>
                     <textarea class="form-control" name="notes" id="previous_callback1" rows="5"  id="comment" readonly><?= $previous_callback;?></textarea>
@@ -703,6 +706,9 @@ Team Fullbasket Property Services Pvt Ltd
                         <textarea class="form-control" name="notes" rows="5" id="current_callback1" name="current_callback1" onkeyup="curr(this.value)" placeholder="Please Update Your Changes To Save"></textarea>
                     </div>
                     <div class="clearfix"></div>
+                     <?php
+                    if($this->session->userdata('user_type')!='admin')
+                        {?>
                     <div id="clientKYC" class="col-md-12 form-group">
                             <input type="hidden" id="callback_id_kyc" name="callback_id_kyc" value="<?= $id ?>">
                             <br>
@@ -765,6 +771,9 @@ Team Fullbasket Property Services Pvt Ltd
                                 <button type="button" onclick="customer_kyc()" class="btn btn-success">Send</button>
                             </div>
                         </div>
+                        <?php
+                    }
+                    ?>
                     <div class="col-md-6 form-group">
                         <input type="checkbox" name="fancy-checkbox-success" onclick="reassignDate()"  id="fancy-checkbox-success" autocomplete="off" />
                         <div class="btn-group">
@@ -1064,6 +1073,14 @@ e.preventDefault();
 }
 });
 });*/
+        <?php
+        if($this->session->userdata('user_type')=='admin')
+            {?>
+                $("input").prop('disabled', false);
+                $("select").prop('disabled', false);
+        <?php
+    }
+        ?>
 
     $(function(){
         $('#site_visit_data .sbmit').on('click', function() {
@@ -1346,6 +1363,7 @@ e.preventDefault();
             }
         }
         $(".se-pre-con").show();
+
         var data = {
             'extrxDataIds' : ($('#extraDataIds').val()) ? $('#extraDataIds').val() : 0,
             'callback_id':$('#mhid').val(),
