@@ -545,7 +545,8 @@ class Admin extends CI_Controller {
 		$id = $this->input->post('callback_id');
 if($this->input->post('budget')!='')
 {		
-$customer_req = array(
+	
+			$customer_req = array(
 			'callback_id'=>$id,
             'budget'=>$this->input->post('budget'),  
             'city'=>$this->input->post('city'),  
@@ -559,6 +560,18 @@ $customer_req = array(
             'date_created' => date('Y-m-d')
 		);
 		$this->callback_model->insert_req($customer_req);
+	
+		$customer_req = array( 
+		            'budget'=>$this->input->post('budget'),  
+		            'city'=>$this->input->post('city'),  
+		            'location'=>$this->input->post('location'),  
+		            'p_type' => $this->input->post('p_type'),
+		            'possesion' => $this->input->post('possesion'),
+		            'a_services' => $this->input->post('a_services'),
+		            'tos' => $this->input->post('tos'),
+		            'client_type' => $this->input->post('client_type')
+				);
+				$this->callback_model->updateWhere(array("id"=>$id),$customer_req,"callback");	
 }
 		$update_data = array(
 			'last_update' => date('Y-m-d H:s:i')
