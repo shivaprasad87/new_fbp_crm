@@ -2622,11 +2622,12 @@ if ($err) {
 		$results 			= array();
 		$results['type'] 	= 0;
 
-		if($this->input->post('userId') && $this->input->post('stsId')) {
+		if($this->input->post('userId') && $this->input->post('stsId') && $this->input->post('m_dept')) {
 			if($this->session->userdata('CHKVALUES')){
 				$params = array(
 					'user_id'		=> $this->input->post('userId'),
 					'status_id'		=> $this->input->post('stsId'),
+					'dept_id'		=> $this->input->post('m_dept'),
 					'due_date'		=> date('Y-m-d H:i:s'),
 					'last_update'	=> date('Y-m-d H:i:s'),
 					'date_added'	=> date('Y-m-d H:i:s'),

@@ -1037,8 +1037,18 @@
                     <h4 class="modal-title">Dead Leads Reassign</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">                         
-                        <div class="col-md-6 form-group">
+                    <div class="row">   
+                        <div class="col-md-4 form-group">
+                            <label for="emp_code">Dept:</label>
+                            <select  class="form-control"  id="m_dept" name="m_dept" required>
+                                <option value="">Select</option>
+                                <?php $all_department=$this->common_model->all_active_departments();
+                                foreach($all_department as $department){?>
+                                    <option value="<?php echo $department->id; ?>"><?php echo $department->name; ?></option>
+                                <?php }?>               
+                            </select>
+                        </div>                      
+                        <div class="col-md-4 form-group">
                             <label for="emp_code">User:</label>
                             <select  class="form-control"  name="userId" id="userId" required >
                                 <option value="">Select</option>         
@@ -1059,7 +1069,7 @@
                                 ?>                             
                             </select>
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label for="name">Status:</label>
                             <select  class="form-control"  name="status" id="statusId" required >
                                 <option value="">Select</option>    
@@ -1612,13 +1622,14 @@
         
         $('#modalReassign .btn-submit').on('click', function(){
             var userId = $('#modalReassign #userId').val();
+            var m_dept = $('#modalReassign #m_dept').val();
             var stsId  = $('#modalReassign #statusId').val();
             if(userId && stsId ) {
                 $(".se-pre-con").show();
                 $.ajax({
                     type    : 'POST',
                     url     : '<?= base_url('admin/post_dead_leads_reassing') ?>',
-                    data    : {userId : userId, stsId : stsId},
+                    data    : {userId : userId, stsId : stsId, m_dept:m_dept},
                     success : function(data){
                         $(".se-pre-con").hide("slow");
                         var res = JSON.parse(data);
