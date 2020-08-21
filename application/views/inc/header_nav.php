@@ -63,6 +63,7 @@ $i=1;
                         echo '<ul>';
                         foreach ($childModules as $cModule) {
                             $baseLink = ($this->session->userdata('user_type') == 'admin' || $this->session->userdata('user_type') == 'City_head') ? base_url('admin/'.$cModule['permalink']) : base_url($cModule['permalink']);
+                            if(in_array($cModule['id'], $permissionArry))
                                  echo '<li><a href="'.$baseLink.'">'.$cModule['module'].'</a></li>';
                         }
                         echo '</ul>';
