@@ -237,8 +237,33 @@
                                     <option value="<?php echo $value->id ?>" <?php echo ($value->id  == $user_name) ? 'selected' : ''; ?>><?php echo $value->first_name." ".$value->last_name." (user)"; ?></option>
                                 <?php } ?>
                                 <option value="1">Admin</option>
-                            <?php } ?>
-                        <?php }else{ ?>
+                            <?php } 
+                            else
+                            {
+                              $all_user= $this->user_model->all_users("type in (1,2,3,4)"); 
+                         
+                            foreach( $all_user as $user){ 
+                                switch ($user->type) {
+                                    case '1':
+                                        $role = "User";
+                                        break;
+
+                                    case '2':
+                                        $role = "Manager";
+                                        break;
+
+                                    case '3':
+                                        $role = "VP";
+                                        break;
+                                    
+                                    case '4':
+                                        $role = "Director";
+                                        break;
+                                }
+                                ?>
+                                <option value="<?php echo $user->id ?>"><?php echo $user->first_name." ".$user->last_name." ($role)"; ?></option>
+                            <?php } ?>              
+                        <?php }}else{ ?>
                             <?php $all_user= $this->user_model->all_users("type in (1,2,3,4,5,6)"); 
                             foreach( $all_user as $user){ 
                                 switch ($user->type) {
