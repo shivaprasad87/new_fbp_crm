@@ -56,7 +56,7 @@
                   <form method="post" enctype="multipart/form-data">
                   <div class="col-sm-3 form-group">
                      <label for="builder">Builder:</label>
-                     <select id="builder" name="builder" class="form-control" required="required">
+                     <select id="builder" name="builder" class="form-control" required="required" onchange="populate_projects(this.value);">
                         <option value="">Select</option>
                         <?php $allbuilders = $this->common_model->all_active_builders(); 
                            foreach ($allbuilders as $builder) { ?>
@@ -75,6 +75,14 @@
                      </select>
                   </div>
                   <div class="col-md-3 form-group">
+                     <label for="p_location">Project Location:</label>
+                     <input type="text" name="p_location" class="form-control">
+                  </div>
+                  <div class="col-md-3 form-group">
+                     <label for="ps_price">Project Starting Price:</label>
+                     <input type="text" name="ps_price" class="form-control">
+                  </div>
+                  <div class="col-md-3 form-group">
                      <label for="c_name">Name:</label>
                      <input type="text" name="c_name" class="form-control">
                   </div>
@@ -86,6 +94,10 @@
                      <label for="c_number">Number:</label>
                      <input type="text" name="c_number" class="form-control">
                   </div>
+                  <div class="col-md-3 form-group">
+                     <label for="pos_year">Posession:</label>
+                     <input type="text" name="pos_year" id="pos_year" class="form-control pos_year">
+                  </div> 
                           <div class="col-sm-6 col-md-6 col-lg-6">
                      <div class="form-group">
                          <label class="control-label">Project Files</label>
@@ -142,6 +154,24 @@
       </div>
       <div class="clearfix"></div>
    </div>
+   <script>
+                    function populate_projects(obj)
+                    {     
+                      $('#m_project').empty(); 
+                      $.ajax({
+                              type: "POST",
+                              url: "get_projects",
+                              data: { 'builder_id': obj  },
+                              success: function(data){
+                                  //console.log(data);
+                                  var opts = $.parseJSON(data); 
+                                  $.each(opts, function(i, d) { 
+                                      $('#m_project').append('<option value="' + d.id + '">' + d.name + '</option>');
+                                  });
+                              }
+                          });
+                    }
+                  </script>
    <script>
       var toggle = true;
                 

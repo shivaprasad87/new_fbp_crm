@@ -1379,10 +1379,16 @@ class Dashboard extends CI_Controller {
           {
             $builder_id = $this->input->post('builder');
             $project_id = $this->input->post('m_project');
+            $p_location = $this->input->post('p_location');
+            $ps_price = $this->input->post('ps_price');
+            $pos_year = $this->input->post('pos_year');
             $this->session->set_flashdata('builder_id', $builder_id);
             $this->session->set_flashdata('project_id', $project_id);
+            $this->session->set_flashdata('p_location', $p_location);
+            $this->session->set_flashdata('ps_price', $ps_price);
+            $this->session->set_flashdata('pos_year', $pos_year);
            // print_r(array("b_id"=>$builder_id,"p_id"=>$project_id));
-            $a = $this->callback_model->getWhere(array("b_id"=>$builder_id,"p_id"=>$project_id),'property_data');
+            $a = $this->callback_model->getWhere(array("b_id"=>$builder_id,"p_id"=>$project_id,"location"=>$p_location,"starting_price"=>$ps_price,"possession"=>"year(".$pos_year.")"),'property_data');
             if(count($a)<0 || empty($a))
             {
              $this->session->set_flashdata('error', 'No Data Found! Please Contact Your Manager OR Admin ');

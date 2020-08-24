@@ -1344,4 +1344,28 @@ $list_id=implode(',', $ids);
 
         return $query->result();
     }
+    public function property_locations($table='',$where='')
+    {
+       $this->db->select('location')
+       ->group_by('location');
+       if($where)
+        $this->db->like('location',$where);
+       $data =  $this->db->get($table)->result();
+       foreach($data as $row ){
+          $response[] = array("name"=>$row->location);
+       } 
+        return $response;
+    }
+        public function property_budget($table='',$where='')
+    {
+       $this->db->select('starting_price')
+       ->group_by('starting_price');
+       if($where)
+        $this->db->like('starting_price',$where);
+       $data =  $this->db->get($table)->result();
+       foreach($data as $row ){
+          $response[] = array("name"=>$row->starting_price);
+       } 
+        return $response;
+    }
 }

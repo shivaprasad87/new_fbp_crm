@@ -606,8 +606,6 @@ Team Fullbasket Property Services Pvt Ltd
                     </div>
                      <script>
                       $(document).ready(function(){
-
-     // Initialize 
      $( "#Location" ).autocomplete({
         source: function( request, response ) {
           // Fetch data

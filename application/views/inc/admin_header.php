@@ -66,13 +66,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                      });
                 });
                 $('#ui-datepicker-div').draggable();
+
+                   $('.pos_year').datepicker( {
+                        dateFormat: 'yy',
+                        changeMonth: false,
+                        minViewMode: 2,
+                        onClose: function(dateText, inst) {  
+                            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                            $(this).datepicker('setDate', new Date(year));
+                        }
+                    });
+                    $(".pos_year").focus(function () {
+                        $(".ui-datepicker-month").hide();
+                    });
+
                 $('#c_bkngMnth, #c_estMonthofInvoice').MonthPicker({
              Button: false
                   });
+
                 $('.timePicker').each(function(){
                     $(this).timepicker({ 'timeFormat': 'H:i' });
                 });
-            });
+            }); 
         </script>
         <style type="text/css">
     /* td

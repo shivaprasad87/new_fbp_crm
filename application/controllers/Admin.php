@@ -3477,10 +3477,13 @@ public function make_user_online($value='')
         { 
         	$builder_id = $this->input->post('builder');
         	$project_id = $this->input->post('m_project');
+        	$p_location = $this->input->post('p_location');
+        	$ps_price = $this->input->post('ps_price');
+        	$pos_year = $this->input->post('pos_year');
         	$c_name = $this->input->post('c_name');
         	$c_email = $this->input->post('c_email');
         	$c_number = $this->input->post('c_number');
-        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number);
+        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number,"location"=>$p_location,"starting_price"=>$ps_price,"possession"=>$pos_year."-01-01");
         	$property_id = $this->callback_model->insertRow($p_data,'property_data'); 
         	$gallery = $this->input->post('images');
 
@@ -3574,4 +3577,21 @@ public function make_user_online($value='')
         $config['overwrite'] = FALSE;
         return $config;
     }
+    public function get_projects($value='')
+    {
+    	$b_id = $this->input->get_post('builder_id');
+    	$properties = $this->common_model->getWhere(array("builder_id"=>$b_id),"project");
+    	echo json_encode($properties);
+    }
+    public function property_locations($value='')
+        {
+           $data  = $this->callback_model->property_locations('property_data',$this->input->get_post('Location'));
+           echo json_encode($data);
+        }
+    public function property_budget($value='')
+        {
+           $data  = $this->callback_model->property_budget('property_data',$this->input->get_post('budget'));
+           echo json_encode($data);
+        }
+
 }
