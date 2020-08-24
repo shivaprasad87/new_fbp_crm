@@ -1452,7 +1452,7 @@ e.preventDefault();
         console.log(data);
         var a = $("#m_dept").val();
         var status_id = <?=$manage_status ?>;
-    if(a==1 || status_id==2)
+    if(a==1 && status_id==2)
     {
         $("#budget").prop('required',true);
         $("#cities").prop('required',true);
