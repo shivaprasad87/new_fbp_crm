@@ -207,7 +207,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="assign">Status:</label>
-                    <select  class="form-control"  id="m_status" onchange="status(this.value)" name="status_id" required="required" <?php if(!$edit) echo 'disabled'; ?>>
+                    <select  class="form-control"  id="m_status" onchange="status(this.value);" name="status_id" required="required" <?php if(!$edit) echo 'disabled'; ?>>
                         <option value="">Select</option>
                         <?php $statuses= $this->common_model->all_active_statuses(); 
                         foreach( $statuses as $status){ ?>
@@ -541,7 +541,7 @@ Team Fullbasket Property Services Pvt Ltd
                 <?php
                 if($this->session->userdata('user_type')!='admin')
                         {?>
-               <div class="col-sm-12 clint_req" style="background: #b9bdc04f;margin-bottom: 30px; padding-bottom: 10px;" >
+               <div class="col-sm-12 clint_req" style="background: #b9bdc04f;margin-bottom: 30px; padding-bottom: 10px;" <?php if($manage_status==2) echo ''; else echo 'hidden'; ?>>
                     <h1 class="text-center" >Client Requirement</h1>
                     <div class="col-sm-3 form-group">
                         <label for="budget">Budget:</label>
@@ -1073,7 +1073,7 @@ e.preventDefault();
 }
 });
 });*/
-        <?php
+  <?php
         if($this->session->userdata('user_type')=='admin')
             {?>
                 $("input").prop('disabled', false);
@@ -1451,7 +1451,8 @@ e.preventDefault();
 
         console.log(data);
         var a = $("#m_dept").val();
-    if(a==1)
+        var status_id = <?=$manage_status ?>;
+    if(a==1 || status_id==2)
     {
         $("#budget").prop('required',true);
         $("#cities").prop('required',true);
@@ -1512,20 +1513,31 @@ e.preventDefault();
             $('#close').hide();
             $('#dead').hide();
             $('#abc').show();
+             $('.clint_req').hide();
             
         } else if('5'==v){
             $('#abc').hide();
             $('#dead').hide();
             $('#close').show(); 
+             $('.clint_req').hide();
         } else if('4'==v){
             $('#abc').hide();
             $('#close').hide();
             $('#dead').show(); 
+             $('.clint_req').hide();
+
+        } 
+        else if('2'==v){
+            $('#abc').hide();
+            $('#close').hide();
+            $('#dead').hide();
+            $('.clint_req').show(); 
 
         } else{
             $('#close').hide();
             $('#abc').hide();
             $('#dead').hide(); 
+            $('.clint_req').hide(); 
         }
     }
 
