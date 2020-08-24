@@ -548,12 +548,14 @@ Team Fullbasket Property Services Pvt Ltd
                          
                         <select  class="form-control"  id="budget" name="budget"    >
                                     <option value="">Select</option>  
-                                    <option value="1" <?php if($budget==1) echo 'selected';?> >50 Lakhs</option>
-                                    <option value="2" <?php if($budget==2) echo 'selected';?>>50-65L</option>
-                                    <option value="3" <?php if($budget==3) echo 'selected';?>>65L-80L</option>
-                                    <option value="4" <?php if($budget==4) echo 'selected';?>>1-1.5cr</option>
-                                    <option value="5" <?php if($budget==5) echo 'selected';?>>1.5-2 cr</option>
-                                    <option value="6" <?php if($budget==6) echo 'selected';?>>2 cr+</option>                                            
+                                    <option value="1" <?php if($budget==1) echo 'selected';?> ><25 Lakhs</option>
+                                    <option value="2" <?php if($budget==2) echo 'selected';?>>25-50</option>
+                                    <option value="1" <?php if($budget==3) echo 'selected';?>>50 Lakhs</option>
+                                    <option value="2" <?php if($budget==4) echo 'selected';?>>50-65L</option>
+                                    <option value="3" <?php if($budget==5) echo 'selected';?>>65L-80L</option>
+                                    <option value="4" <?php if($budget==6) echo 'selected';?>>1-1.5cr</option>
+                                    <option value="5" <?php if($budget==7) echo 'selected';?>>1.5-2 cr</option>
+                                    <option value="6" <?php if($budget==8) echo 'selected';?>>2 cr+</option>                                            
                         </select>
                     </div>
                     <!-- <div class="col-sm-3 form-group">
