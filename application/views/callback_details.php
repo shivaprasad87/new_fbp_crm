@@ -1451,7 +1451,8 @@ e.preventDefault();
 
         console.log(data);
         var a = $("#m_dept").val();
-        var status_id = <?=$manage_status ?>;
+        var status_id = $('#m_status').val();
+
     if(a==1 && status_id==2)
     {
         $("#budget").prop('required',true);
