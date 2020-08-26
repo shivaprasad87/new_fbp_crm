@@ -72,7 +72,7 @@
                         <option value="">Select</option>
                         <?php $projects= $this->common_model->all_active_projects(); 
                            foreach( $projects as $projectData){ ?>
-                        <option value="<?php echo $projectData->id ?>"<?php if($projectData->id==$property_data[0]->p_id) echo "selected"; ?>><?php echo $builder->name; ?>><?php echo $projectData->name ?></option>
+                        <option value="<?php echo $projectData->id ?>"<?php if($projectData->id==$property_data[0]->p_id) echo "selected"; ?>><?php echo $projectData->name ?></option>
                         <?php }?>               
                      </select>
                   </div>
