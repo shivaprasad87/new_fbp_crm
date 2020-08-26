@@ -3636,8 +3636,8 @@ public function make_user_online($value='')
     public function delete_files($table_of_image = 'property_data_files')
     {
         $path = $this->input->post('path');
-        $this->properties_model->deleteWhere(array('file_name' => $path), $table_of_image);
-        echo unlink('./property_data/' . $path);
+        $this->common_model->deleteWhere(array('file_name' => $path), $table_of_image);
+       	echo unlink('./property_data/' . $path);
         
         
     }
