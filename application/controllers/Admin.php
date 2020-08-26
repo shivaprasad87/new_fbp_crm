@@ -3512,6 +3512,16 @@ public function make_user_online($value='')
 			 }
 
         } 
+        	// $data['projects']= $this->common_model->all_active_projects();
+		$rowCount 				=$this->common_model->countAll('property_data');
+		$data["totalRecords"] 	= $rowCount;
+		$data["links"] 			= paginitaion(base_url().'admin/property_data/', 3,VIEW_PER_PAGE, $rowCount);
+		$page = $this->uri->segment(3);
+        $offset = !$page ? 0 : $page;
+		//------ End --------------
+
+      $data['prop_data'] = $this->common_model->getPropjectData('property_data',VIEW_PER_PAGE,$offset);
+      //echo $this->db->last_query();die;
 		$this->load->view('admin/property_data',$data);
 	}
 	     public function upload_files($folder = 'property_data')
@@ -3593,5 +3603,33 @@ public function make_user_online($value='')
            $data  = $this->callback_model->property_budget('property_data',$this->input->get_post('budget'));
            echo json_encode($data);
         }
+         public function download_projectdata_files($value='')
+		 {
+
+		    if($this->input->get())
+		    {
+		        $id = $this->input->get_post("id");
+		      $this->load->library("zip");
+		        $files =  json_decode(json_encode($this->common_model->getfilenames($id)),true);
+		      foreach ($files as $file) {
+		   
+		          $this->zip->read_file($file['file_name']);
+		      }
+		      $this->zip->download(time().".zip");
+		      redirect(base_url("admin/property_data"));
+		    }
+		    
+		 }
+		 public function delete_project_data($value='')
+		 {
+		 	if($this->input->get())
+		    {
+		        $id = $this->input->get_post("id");
+		        $bool = $this->common_model->deleteWhere(array('p_d_id'=>$id),"property_data_files");
+		        $this->common_model->deleteWhere(array('id'=>$id),"property_data");
+		        redirect(base_url("admin/property_data"));
+		    }
+		 	    
+		 }
 
 }

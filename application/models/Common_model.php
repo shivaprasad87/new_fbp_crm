@@ -690,6 +690,20 @@ class Common_model extends MY_Model {
         
         return $this->db->get()->result();
     }
+       public function getPropjectData($table_name = '', $perpage = NULL, $offset = NULL) {
+        if ($table_name == '')
+            $table_name = $this->table_name;
+
+        return (is_null($perpage) or is_null($offset)) ? $this->db->select('t.*,b.name as builder_name, p.name as project_name')->join('builder b','b_id=b.id')->join('project p','t.t.p_id=p.id')->get($table_name." as t")->result() : $this->db->select('t.*,b.name as builder_name, p.name as project_name')->join('builder b','t.b_id=b.id')->join('project p','t.p_id=p.id')->get($table_name." as t", $perpage, $offset)->result();
+    }
+        public function getfilenames($id='')
+    {
+        $query = $this->db->select("file_name")
+        ->where("p_d_id",$id)
+        ->from("property_data_files");
+        return $query->get()->result();
+
+    }
     
 
 

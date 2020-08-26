@@ -5,7 +5,8 @@
    else
        $this->load->view('inc/header'); 
    
-       echo "<script>var base_url='".base_url()."'</script>";   
+       echo "<script>var base_url='".base_url()."'</script>"; 
+
    ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.css">
 <body>
@@ -115,6 +116,80 @@
                </div>
             </div>
             <!--/tabs-->
+            <div class="container">
+        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="priority-1">No</th>
+                    <th class="priority-2">Builder</th> 
+                    <th class="priority-3">Project</th>
+                    <th class="priority-4">Project Location</th>
+                    <th class="priority-5">Project Starting Price</th>
+                    <th class="priority-8">Name</th>
+                    <th class="priority-9">Email</th>
+                    <th class="priority-9">Number</th>
+                    <th class="priority-10">Date Added</th>
+                    <!-- <th>Last Update</th> -->
+                    <th class="priority-11">Action</th>
+                </tr>
+            </thead> 
+            <tbody id="main_body">
+                <?php $i= 1;
+                if(count($prop_data)>0){
+                  // echo $this->session->userdata('self');
+                foreach ($prop_data as $data) {
+                  ?>
+                    <tr id="row<?php echo $i ?>" >
+                        <td class="priority-1"><?php echo $i; ?></td>
+                        <td class="priority-2"><?php echo $data->builder_name; ?></td>
+                        <td class="priority-3"><?php echo $data->project_name ?></td>
+                        <td class="priority-4"><?php echo $data->location; ?></td>
+                        <td class="priority-5"><?php echo $data->starting_price; ?></td>
+                        
+                        <td class="priority-8"><?php echo $data->name; ?></td>
+                        <td class="priority-9"><?php echo $data->email; ?></td>
+                        <td class="priority-8"><?php echo $data->number; ?></td>
+                        <td class="priority-10"><?php echo $data->date_created; ?></td>
+                        <!-- <td><?php echo $data->last_update; ?></td> -->
+                        <td class="priority-11">
+                            <table>
+                            <tr class="icon" style="background-color: #ffffff00;">
+                                    <td> 
+                                        <a href="<?= base_url('admin/download_projectdata_files?id='.$data->id) ?>" >
+                                            <i class="fa fa-download fa-2x"  title="Detail" style="" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="<?= base_url('admin/delete_project_data?id='.$data->id) ?>">
+                                            <i class="fa fa-trash fa-2x" title="Notes" style="" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                <?php $i++; } }
+                else
+                {
+                    echo "<tr><td colspan=13 align=center>No Data Found</td></tr>";
+                }
+
+                ?>
+            </tbody>
+        </table>
+    
+    
+        <div style="margin-top: 20px">
+             <span class="pull-left"><p>Showing <?php echo ($this->uri->segment(3)) ? $this->uri->segment(3)+1 : 1; ?> to <?= ($this->uri->segment(3)+count($prop_data)); ?> of <?= $totalRecords; ?> entries</p></span>
+              <ul class="pagination pull-right"><?php echo $links; ?></ul> 
+        </div>
+    </div>
+<br/><br/>
+
+
+ 
+ 
+
             <div class="tab-main">
                <!--/tabs-inner-->
             </div>
@@ -193,7 +268,14 @@
                 });
    </script>
    <!--js -->
-   <script>
+   <script> 
+    $(document).ready(function() {
+        $('#example').DataTable({
+              "paging":   false,
+              "info": false
+ 
+        });
+      });
       function add(){
           $(".se-pre-con").show();
           var broker=$('#broker').val();
