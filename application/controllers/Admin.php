@@ -3524,6 +3524,71 @@ public function make_user_online($value='')
       //echo $this->db->last_query();die;
 		$this->load->view('admin/property_data',$data);
 	}
+	public function property_data_edit($id='')
+	{
+		$data['name'] = "Edit Property Data";
+        $data['heading'] = "Edit Property Data";
+        $data['property_data'] = $this->common_model->getWhere(array("id"=>$id),"property_data");
+        $data['property_data_files'] = $this->common_model->getWhere(array("p_d_id"=>$id),"property_data_files");
+        if($this->input->post())
+        { 
+
+        	$builder_id = $this->input->post('builder');
+        	$project_id = $this->input->post('m_project');
+        	$p_location = $this->input->post('p_location');
+        	$ps_price = $this->input->post('ps_price');
+        	$pos_year = $this->input->post('pos_year');
+        	$c_name = $this->input->post('c_name');
+        	$c_email = $this->input->post('c_email');
+        	$c_number = $this->input->post('c_number');
+        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number,"location"=>$p_location,"starting_price"=>$ps_price,"possession"=>$pos_year."-01-01");
+        	$bool = $this->callback_model->updateWhere(array("id"=>$id),$p_data,'property_data'); 
+        	//echo $this->db->last_query();die;
+        	$gallery = $this->input->post('images');
+
+			if ($gallery) {
+			    foreach ($gallery as $image) {
+			        $exploded = explode('/', $image);
+			        $this->callback_model->insertRow(array(
+			            'p_d_id' => $id,
+			            'file_name' => 'uploads/property_data/' . end($exploded)
+			        ), 'property_data_files');
+			       rename($image, 'uploads/property_data/' . end($exploded));
+			    }
+			}
+			else
+			{
+				echo "Not able to access files";
+			}
+			 $this->session->set_flashdata('success', 'Project Has Been Updated successfully');
+			 if($this->session->userdata('user_type')=='admin')
+			 {
+			 	redirect('admin/property_data');
+			 }
+			 else
+			 {
+			 	redirect('property_data');
+			 }
+
+        } 
+		$this->load->view('admin/property_data_edit',$data);
+	}
+	    public function get_images($id, $table_of_image = 'property_data_files')
+    {
+        $result = array();
+        $images = $this->common_model->getWhere(array('p_d_id' => $id), $table_of_image);
+        foreach ($images as $key => $file) { //get an array which has the names of all the files and loop through it 
+            if ($file->file_name && is_file($file->file_name)){
+                $obj['name'] = basename($file->file_name); //get the filename in array
+                $obj['path'] = base_url($file->file_name);
+                $obj['image_id'] = $file->id;
+                $obj['size'] = filesize("./" . $file->file_name); //get the flesize in array
+                $result[$key] = $obj ? $obj : ''; // copy it to another array
+            }
+        }
+        echo json_encode($result);
+    }
+
 	     public function upload_files($folder = 'property_data')
     {
         if (empty($_FILES['file']['name'])) {
@@ -3568,11 +3633,11 @@ public function make_user_online($value='')
         exit;
     }
 
-    public function delete_files($table_of_image = 'property_images')
+    public function delete_files($table_of_image = 'property_data_files')
     {
         $path = $this->input->post('path');
-        echo unlink('./' . $path);
-        $this->properties_model->deleteWhere(array('image' => $path), $table_of_image);
+        echo unlink('./property_data/' . $path);
+        $this->properties_model->deleteWhere(array('file_name' => $path), $table_of_image);
         
     }
 

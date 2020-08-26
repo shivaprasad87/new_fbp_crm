@@ -56,12 +56,13 @@
     ?>
                   <form method="post" enctype="multipart/form-data">
                   <div class="col-sm-3 form-group">
+                    <input type="hidden" name="prop_id" id="prop_id" value="<?=$property_data[0]->id?>">
                      <label for="builder">Builder:</label>
                      <select id="builder" name="builder" class="form-control" required="required" onchange="populate_projects(this.value);">
                         <option value="">Select</option>
                         <?php $allbuilders = $this->common_model->all_active_builders(); 
                            foreach ($allbuilders as $builder) { ?>
-                        <option value="<?php echo $builder->id; ?>"><?php echo $builder->name; ?></option>
+                        <option value="<?php echo $builder->id; ?>" <?php if($builder->id==$property_data[0]->b_id) echo "selected"; ?>><?php echo $builder->name; ?></option>
                         <?php } ?>
                      </select>
                   </div>
@@ -71,33 +72,33 @@
                         <option value="">Select</option>
                         <?php $projects= $this->common_model->all_active_projects(); 
                            foreach( $projects as $projectData){ ?>
-                        <option value="<?php echo $projectData->id ?>"><?php echo $projectData->name ?></option>
+                        <option value="<?php echo $projectData->id ?>"<?php if($projectData->id==$property_data[0]->p_id) echo "selected"; ?>><?php echo $builder->name; ?>><?php echo $projectData->name ?></option>
                         <?php }?>               
                      </select>
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="p_location">Project Location:</label>
-                     <input type="text" name="p_location" class="form-control">
+                     <input type="text" name="p_location" class="form-control" value="<?=$property_data[0]->location?>">
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="ps_price">Project Starting Price:</label>
-                     <input type="text" name="ps_price" class="form-control">
+                     <input type="text" name="ps_price" class="form-control" value="<?=$property_data[0]->starting_price?>">
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="c_name">Name:</label>
-                     <input type="text" name="c_name" class="form-control">
+                     <input type="text" name="c_name" class="form-control" value="<?=$property_data[0]->name?>">
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="c_email">Email:</label>
-                     <input type="text" name="c_email" class="form-control">
+                     <input type="text" name="c_email" class="form-control" value="<?=$property_data[0]->email?>">
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="c_number">Number:</label>
-                     <input type="text" name="c_number" class="form-control">
+                     <input type="text" name="c_number" class="form-control" value="<?=$property_data[0]->number?>">
                   </div>
                   <div class="col-md-3 form-group">
                      <label for="pos_year">Posession:</label>
-                     <input type="text" name="pos_year" id="pos_year" class="form-control pos_year">
+                     <input type="text" name="pos_year" id="pos_year" class="form-control pos_year" value="<?=date('Y',strtotime($property_data[0]->possession))?>">
                   </div> 
                           <div class="col-sm-6 col-md-6 col-lg-6">
                      <div class="form-group">
@@ -110,90 +111,12 @@
                      </div>
                      </div>
                   <div class="col-sm-3 form-group">
-                     <button type="submit" id="add_property_data" name="fileSubmit" style="margin-top:25px;" class="btn btn-success btn-block">Add Project Data</button>
+                     <button type="submit" id="edit_property_data" name="fileSubmit" style="margin-top:25px;" class="btn btn-success btn-block">Update Project Data</button>
                   </div>
                   </form>
                </div>
             </div>
             <!--/tabs-->
-            <div class="container">
-        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th class="priority-1">No</th>
-                    <th class="priority-2">Builder</th> 
-                    <th class="priority-3">Project</th>
-                    <th class="priority-4">Project Location</th>
-                    <th class="priority-5">Project Starting Price</th>
-                    <th class="priority-8">Name</th>
-                    <th class="priority-9">Email</th>
-                    <th class="priority-9">Number</th>
-                    <th class="priority-10">Date Added</th>
-                    <!-- <th>Last Update</th> -->
-                    <th class="priority-11">Action</th>
-                </tr>
-            </thead> 
-            <tbody id="main_body">
-                <?php $i= 1;
-                if(count($prop_data)>0){
-                  // echo $this->session->userdata('self');
-                foreach ($prop_data as $data) {
-                  ?>
-                    <tr id="row<?php echo $i ?>" >
-                        <td class="priority-1"><?php echo $i; ?></td>
-                        <td class="priority-2"><?php echo $data->builder_name; ?></td>
-                        <td class="priority-3"><?php echo $data->project_name ?></td>
-                        <td class="priority-4"><?php echo $data->location; ?></td>
-                        <td class="priority-5"><?php echo $data->starting_price; ?></td>
-                        
-                        <td class="priority-8"><?php echo $data->name; ?></td>
-                        <td class="priority-9"><?php echo $data->email; ?></td>
-                        <td class="priority-8"><?php echo $data->number; ?></td>
-                        <td class="priority-10"><?php echo $data->date_created; ?></td>
-                        <!-- <td><?php echo $data->last_update; ?></td> -->
-                        <td class="priority-11">
-                            <table>
-                            <tr class="icon" style="background-color: #ffffff00;">
-                                    <td> 
-                                        <a href="<?= base_url('admin/download_projectdata_files?id='.$data->id) ?>" >
-                                            <i class="fa fa-download fa-2x"  title="Detail" style="" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="<?= base_url('admin/delete_project_data?id='.$data->id) ?>">
-                                            <i class="fa fa-trash fa-2x" title="Notes" style="" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="<?= base_url('admin/property_data_edit/'.$data->id) ?>" target="_blank">
-                                            <i class="fa fa-edit fa-2x" title="Notes" style="" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                <?php $i++; } }
-                else
-                {
-                    echo "<tr><td colspan=13 align=center>No Data Found</td></tr>";
-                }
-
-                ?>
-            </tbody>
-        </table>
-    
-    
-        <div style="margin-top: 20px">
-             <span class="pull-left"><p>Showing <?php echo ($this->uri->segment(3)) ? $this->uri->segment(3)+1 : 1; ?> to <?= ($this->uri->segment(3)+count($prop_data)); ?> of <?= $totalRecords; ?> entries</p></span>
-              <ul class="pagination pull-right"><?php echo $links; ?></ul> 
-        </div>
-    </div>
-<br/><br/>
-
-
- 
- 
 
             <div class="tab-main">
                <!--/tabs-inner-->
@@ -240,7 +163,7 @@
                       $('#m_project').empty(); 
                       $.ajax({
                               type: "POST",
-                              url: "get_projects",
+                              url: "<?=base_url('admin/get_projects')?>",
                               data: { 'builder_id': obj  },
                               success: function(data){
                                   //console.log(data);
@@ -272,78 +195,11 @@
                     toggle = !toggle;
                 });
    </script>
-   <!--js -->
-   <script> 
-    $(document).ready(function() {
-        $('#example').DataTable({
-              "paging":   false,
-              "info": false
- 
-        });
-      });
-      function add(){
-          $(".se-pre-con").show();
-          var broker=$('#broker').val();
-          if(broker!=''){
-              $.ajax({
-                  type:"POST",
-                  url: "<?php echo base_url()?>admin/add_broker",
-                  data:{broker:broker},
-                  success:function(data){
-                      alert("add successful");
-                  }
-              });
-              location.reload();
-          }
-          else{
-              $(".se-pre-con").hide("slow");
-              alert("Please Enter a value");
-          }
-      }
-      function change_status(id){
-          $(".se-pre-con").show();
-          $.ajax({
-              type:"POST",
-              url: "<?php echo base_url()?>admin/change_status_broker",
-              data:{id:id},
-              success:function(data){
-                  if(data.active){
-                      $('#brokerus_sp_'+id).text('Active');
-                      $('#b1'+id).removeClass("btn-danger");
-                      $('#b1'+id).addClass("btn-info");
-                  }else{
-                      $('#brokerus_sp_'+id).text('Inactive');
-                      $('#b1'+id).removeClass("btn-info");
-                      $('#b1'+id).addClass("btn-danger");
-                  }
-                  $(".se-pre-con").hide("slow");
-              }
-          });
-      }
-      function check_broker(name){
-          $(".se-pre-con").show();
-          $('#add_broker').prop('disabled', true);
-          $.ajax({
-              type:"POST",
-              url: "<?php echo base_url()?>admin/check_broker",
-              data:{code:name},
-              success:function(data){
-                  if(data.count){
-                      alert("Duplicate Code! try again");
-                      $('#broker').val('');
-                  }
-                  else
-                      $('#add_broker').prop('disabled', false);
-                  $(".se-pre-con").hide("slow");
-              }
-          });
-      }
-   </script>
    <script type="text/javascript" src="<?php echo base_url()?>assets/js/TweenLite.min.js"></script>
    <script type="text/javascript" src="<?php echo base_url()?>assets/js/CSSPlugin.min.js"></script>
    <!--<script src="<?php echo base_url()?>assets/js/scripts.js"></script>-->
-   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js?v=3.4.5"></script>
-   <script type="text/javascript"src="<?php echo base_url()?>assets/js/properties.js"></script>
+   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js?v=3.4.5"></script> 
+   <script type="text/javascript"src="<?php echo base_url()?>assets/js/properties_edit.js"></script>
    <!-- Bootstrap Core JavaScript -->
 </body>
 </html>
