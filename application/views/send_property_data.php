@@ -204,6 +204,16 @@
                      <label for="pos_year">Posession:</label>
                      <input type="text" name="pos_year" id="pos_year" class="form-control pos_year" placeholder="only year"value="<?=$this->session->flashdata('pos_year')?>">
                   </div>    
+                  <div class="col-md-3 form-group">
+                     <label for="emp_code">City:</label>
+                     <select  class="form-control"  id="city_id" name="city_id" required="required">
+                        <option value="">Select</option>
+                        <?php  
+                           foreach( $active_cities as $active_cities){ ?>
+                        <option value="<?php echo $active_cities->id ?>"><?php echo $active_cities->name ?></option>
+                        <?php }?>               
+                     </select>
+                  </div>
             <div class="col-sm-4 col-md-4 form-group">
                 <button type="submit" name="seacrh" id="search" style="margin-top:25px;" class="btn btn-success btn-block">Search</button>
             </div>

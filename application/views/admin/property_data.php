@@ -99,7 +99,7 @@
                      <label for="pos_year">Posession:</label>
                      <input type="text" name="pos_year" id="pos_year" class="form-control pos_year">
                   </div> 
-                          <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
                      <div class="form-group">
                          <label class="control-label">Project Files</label>
                          <div class="">
@@ -109,6 +109,17 @@
                          </div>
                      </div>
                      </div>
+                     
+                  <div class="col-md-3 form-group">
+                     <label for="emp_code">City:</label>
+                     <select  class="form-control"  id="city_id" name="city_id" required="required">
+                        <option value="">Select</option>
+                        <?php  
+                           foreach( $active_cities as $active_cities){ ?>
+                        <option value="<?php echo $active_cities->id ?>"><?php echo $active_cities->name ?></option>
+                        <?php }?>               
+                     </select>
+                  </div>
                   <div class="col-sm-3 form-group">
                      <button type="submit" id="add_property_data" name="fileSubmit" style="margin-top:25px;" class="btn btn-success btn-block">Add Project Data</button>
                   </div>

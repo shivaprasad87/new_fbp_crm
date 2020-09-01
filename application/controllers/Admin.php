@@ -3483,7 +3483,8 @@ public function make_user_online($value='')
         	$c_name = $this->input->post('c_name');
         	$c_email = $this->input->post('c_email');
         	$c_number = $this->input->post('c_number');
-        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number,"location"=>$p_location,"starting_price"=>$ps_price,"possession"=>$pos_year."-01-01");
+        	$city_id = $this->input->post('city_id');
+        	$p_data = array("b_id"=>$builder_id,"p_id"=>$project_id,"city_id"=>$city_id,"name"=>$c_name,"email"=>$c_email,"number"=>$c_number,"location"=>$p_location,"starting_price"=>$ps_price,"possession"=>$pos_year."-01-01");
         	$property_id = $this->callback_model->insertRow($p_data,'property_data'); 
         	$gallery = $this->input->post('images');
 
@@ -3521,6 +3522,7 @@ public function make_user_online($value='')
 		//------ End --------------
 
       $data['prop_data'] = $this->common_model->getPropjectData('property_data',VIEW_PER_PAGE,$offset);
+      $data['active_cities'] = $this->common_model->all_active_cities();
       //echo $this->db->last_query();die;
 		$this->load->view('admin/property_data',$data);
 	}
