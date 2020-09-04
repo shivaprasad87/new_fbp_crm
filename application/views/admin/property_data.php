@@ -251,7 +251,7 @@
                       $('#m_project').empty(); 
                       $.ajax({
                               type: "POST",
-                              url: "get_projects",
+                              url: "<?=base_url('admin/')?>get_projects",
                               data: { 'builder_id': obj  },
                               success: function(data){
                                   //console.log(data);
